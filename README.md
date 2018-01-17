@@ -18,3 +18,7 @@ npm install package step
 10. npm i express -S
 11. npm i webpack-dev-server -D
 12. npm i cross-env -D
+13. npm i react-hot-loader@next -D
+14. npm i axios -S
+15. npm i memory-fs -D
+16. npm i http-proxy-middleware -D

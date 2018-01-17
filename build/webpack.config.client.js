@@ -1,4 +1,5 @@
 const path = require('path')
+const webpack = require('webpack')
 const HTMLPlugin = require('html-webpack-plugin')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -10,7 +11,7 @@ const config = {
   output: {
     filename: '[name][hash].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/public'
+    publicPath: '/public/'
   },
   module: {
     rules: [
@@ -35,6 +36,12 @@ const config = {
 }
 
 if(isDev) {
+  config.entry = {
+    app: [
+      'react-hot-loader/patch',
+      path.join(__dirname, '../client/app.js')
+    ]
+  }
   config.devServer = {
     host: '0.0.0.0',
     port: '8888',
@@ -43,11 +50,12 @@ if(isDev) {
     overlay: {
       errors: true
     },
-    publicPath: '/public',
+    publicPath: '/public/',
     historyApiFallback: {
       index: '/public/index.html'
     }
   }
+  config.plugins.push(new webpack.HotModuleReplacementPlugin())
 }
 
 module.exports = config
