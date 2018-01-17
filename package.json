@@ -1,0 +1,25 @@
+{
+  "name": "react_note_ui",
+  "version": "1.0.0",
+  "description": "react_note",
+  "main": "index.js",
+  "dependencies": {
+    "react-dom": "^16.2.0",
+    "react": "^16.2.0",
+    "webpack": "^3.10.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/szm429006/react_note_ui.git"
+  },
+  "author": "photonshalo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/szm429006/react_note_ui/issues"
+  },
+  "homepage": "https://github.com/szm429006/react_note_ui#readme"
+}
