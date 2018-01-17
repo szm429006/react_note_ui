@@ -10,20 +10,20 @@ const config = {
   output: {
     filename: '[name][hash].js',
     path: path.join(__dirname, '../dist'),
-    publicPath: '/public/',
-  }
+    publicPath: '/public/'
+  },
   module: {
     rules: [
       {
-        test: /.jsx$/,
-	loader: 'babel-loader',
+        test:/.jsx$/,
+        loader: 'babel-loader'
       },
       {
-        test: /.js$/,
+        test:/.js$/,
         loader: 'babel-loader',
         exclude: [
           path.join(__dirname, '../node_modules')
-	]
+        ]
       }
     ]
   },
@@ -42,7 +42,7 @@ if(isDev) {
     hot: true,
     overlay: {
       errors: true
-    }
+    },
     publicPath: '/public/',
     historyApiFallback: {
       index: '/public/index.html'
