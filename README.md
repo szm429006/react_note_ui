@@ -22,3 +22,8 @@ npm install package step
 14. npm i axios -S
 15. npm i memory-fs -D
 16. npm i http-proxy-middleware -D
+17. npm i eslint -D
+18. npm i babel-eslint eslint-config-airbnb eslint-config-standard eslint-loader eslint-plugin-import eslint-plugin-jsx-a11y eslint-plugin-node eslint-plugin-promise eslint-plugin-react eslint-plugin-standard -D
+19. npm i husky -D
+20. npm i webpack-merge -D
+21. npm i serve-favicon -S
