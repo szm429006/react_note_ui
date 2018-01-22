@@ -27,3 +27,16 @@ npm install package step
 19. npm i husky -D
 20. npm i webpack-merge -D
 21. npm i serve-favicon -S
+22. npm i nodemon -D
+23. npm i react-router -S
+24. npm i react-router-dom -S
+25. npm i babel-plugin-transform-decorators-legacy babel-preset-stage-1 -D
+26. npm i mobx mobx-react -S
+27. npm i prop-types -S
+28. npm i body-parser express-session query-string -S
+29. npm i react-async-bootstrapper -S
+30. npm i ejs-compiled-loader ejs -S
+31. npm i serialize-javascript -S
+32. npm i react-helmet -S
+33. npm i material-ui@next material-ui-icons -S
+34. npm i react-jss jss jss-preset-default -S

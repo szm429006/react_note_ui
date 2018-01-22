@@ -16,11 +16,16 @@ const config = webpackMerge(baseConfig, {
   plugins: [
     new HTMLPlugin({
       template: path.join(__dirname, '../client/template.html')
+    }),
+    new HTMLPlugin({
+      template: '!!ejs-compiled-loader!' + path.join(__dirname, '../client/server.template.ejs'),
+      filename: 'server.ejs'
     })
   ]
 })
 
 if(isDev) {
+  config.devtool = '#cheap-module-eval-source-map'
   config.entry = {
     app: [
       'react-hot-loader/patch',
@@ -30,7 +35,7 @@ if(isDev) {
   config.devServer = {
     host: '0.0.0.0',
     port: '8888',
-    contentBase: path.join(__dirname, '../dist'),
+    //contentBase: path.join(__dirname, '../dist'),
     hot: true,
     overlay: {
       errors: true
@@ -38,6 +43,9 @@ if(isDev) {
     publicPath: '/public/',
     historyApiFallback: {
       index: '/public/index.html'
+    },
+    proxy: {
+      '/api': 'http://localhost:3333'
     }
   }
   config.plugins.push(new webpack.HotModuleReplacementPlugin())
