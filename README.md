@@ -40,3 +40,4 @@ npm install package step
 32. npm i react-helmet -S
 33. npm i material-ui@next material-ui-icons -S
 34. npm i react-jss jss jss-preset-default -S
+35. npm i classnames -S
