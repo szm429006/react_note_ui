@@ -5,6 +5,7 @@ import {
 } from 'mobx-react'
 import PropTypes from 'prop-types'
 import Helmet from 'react-helmet'
+import queryString from 'query-string'
 
 import Tabs, { Tab } from 'material-ui/Tabs'
 import List from 'material-ui/List'
@@ -14,6 +15,7 @@ import Button from 'material-ui/Button'  //eslint-disable-line
 import { AppState, TopicStore } from '../../store/store'
 import Container from '../layout/container'
 import TopicListItem from './list-item'
+import { tabs } from '../../util/variable-define'
 
 @inject((stores) => {
   return {
@@ -22,17 +24,25 @@ import TopicListItem from './list-item'
   }
 }) @observer
 export default class TopicList extends React.Component {
+  static contextTypes = {
+    router: PropTypes.object,
+  }
+
   constructor() {
     super()
-    this.state = {
-      tabIndex: 1,
-    }
     this.changeTab = this.changeTab.bind(this)
     this.listItemClick = this.listItemClick.bind(this)
   }
 
   componentDidMount() {
-    this.props.topicStore.fetchTopics()
+    const tab = this.getTab()
+    this.props.topicStore.fetchTopics(tab)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.location.search !== this.props.location.search) {
+      this.props.topicStore.fetchTopics(this.getTab(nextProps.location.search))
+    }
   }
 
   asyncBootstrap() {
@@ -44,9 +54,16 @@ export default class TopicList extends React.Component {
     })
   }
 
-  changeTab(e, index) {
-    this.setState({
-      tabIndex: index,
+  getTab(search) {
+    search = search || this.props.location.search
+    const query = queryString.parse(search)
+    return query.tab || 'all'
+  }
+
+  changeTab(e, value) {
+    this.context.router.history.push({
+      pathname: '/list',
+      search: `?tab=${value}`,
     })
   }
 
@@ -58,25 +75,12 @@ export default class TopicList extends React.Component {
 
   render() {
     const {
-      tabIndex,
-    } = this.state
-
-    const {
       topicStore,
     } = this.props
 
     const topicList = topicStore.topics
-
-    // const topic = {
-    //   title: 'This is title',
-    //   username: 'photonshalo',
-    //   reply_count: 20,
-    //   visit_count: 30,
-    //   create_at: 'asdasdasd',
-    //   tab: 'share',
-    // }
-
     const syncingTopics = topicStore.syncing
+    const tab = this.getTab()
 
     return (
       <Container>
@@ -84,13 +88,12 @@ export default class TopicList extends React.Component {
           <title>This is topic list</title>
           <meta name="description" content="This is description" />
         </Helmet>
-        <Tabs value={tabIndex} onChange={this.changeTab}>
-          <Tab label="全部" />
-          <Tab label="分享" />
-          <Tab label="工作" />
-          <Tab label="问答" />
-          <Tab label="精品" />
-          <Tab label="测试" />
+        <Tabs value={tab} onChange={this.changeTab}>
+          {
+            Object.keys(tabs).map(t => (
+              <Tab key={t} label={tabs[t]} value={t} />
+            ))
+          }
         </Tabs>
         <List>
           {
@@ -106,7 +109,13 @@ export default class TopicList extends React.Component {
         {
           syncingTopics ?
             (
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  padding: '40px 0',
+                }}
+              >
                 <CircularProgress color="accent" size={100} />
               </div>
             ) :
@@ -120,4 +129,8 @@ export default class TopicList extends React.Component {
 TopicList.wrappedComponent.propTypes = {
   appState: PropTypes.instanceOf(AppState).isRequired,
   topicStore: PropTypes.instanceOf(TopicStore).isRequired,
+}
+
+TopicList.propTypes = {
+  location: PropTypes.object.isRequired,
 }
